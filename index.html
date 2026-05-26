@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SoftServe Internship Program - Join us for internships in Cloud, Data Analytics, Data Science, Web Development, and GenAI">
+    <title>SoftServe | Internship Opportunities for BTech Students</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="assets/logo.svg" alt="SoftServe Logo" class="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Launch Your Tech Career with SoftServe</h1>
+            <p class="hero-subtitle">Premium internship opportunities for BTech Computer Science students in cutting-edge technologies</p>
+            <button class="btn btn-primary" onclick="document.getElementById('apply').scrollIntoView({behavior: 'smooth', block: 'start'});">Explore Opportunities</button>
+        </div>
+    </section>
+
+    <!-- Internship Areas Section -->
+    <section class="internships" id="internships">
+        <div class="container">
+            <h2 class="section-title">Internship Programs</h2>
+            <p class="section-subtitle">Choose from our specialized tracks and work on real-world projects</p>
+
+            <div class="cards-grid">
+                <!-- Cloud Computing Card -->
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Cloud Computing</h3>
+                        <p class="card-description">Master AWS, Azure, and GCP. Build scalable cloud infrastructure and learn DevOps practices.</p>
+                        <ul class="card-skills">
+                            <li>AWS/Azure/GCP</li>
+                            <li>Docker & Kubernetes</li>
+                            <li>CI/CD Pipelines</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Data Analytics Card -->
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21H4.6c-.56 0-.6-.4-.6-1V3"></path>
+                            <path d="M10 18V9M15 18v-4M7 18v-2"></path>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Data Analytics</h3>
+                        <p class="card-description">Transform data into insights. Learn SQL, Power BI, and advanced analytics techniques.</p>
+                        <ul class="card-skills">
+                            <li>SQL & Data Warehousing</li>
+                            <li>Power BI / Tableau</li>
+                            <li>Business Intelligence</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Data Science Card -->
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Data Science</h3>
+                        <p class="card-description">Build predictive models using Python, ML algorithms, and statistical analysis.</p>
+                        <ul class="card-skills">
+                            <li>Python & R</li>
+                            <li>Machine Learning</li>
+                            <li>Neural Networks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Web Development Card -->
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Web Development</h3>
+                        <p class="card-description">Create modern web applications with React, Node.js, and full-stack technologies.</p>
+                        <ul class="card-skills">
+                            <li>React / Angular / Vue</li>
+                            <li>Node.js & Express</li>
+                            <li>REST APIs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- GenAI Card -->
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Generative AI</h3>
+                        <p class="card-description">Work with LLMs, prompt engineering, and build AI-powered applications.</p>
+                        <ul class="card-skills">
+                            <li>OpenAI / Claude APIs</li>
+                            <li>Prompt Engineering</li>
+                            <li>RAG & Vector DBs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why SoftServe Section -->
+    <section class="why-softserve">
+        <div class="container">
+            <h2 class="section-title">Why Choose SoftServe?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">💼</div>
+                    <h3>Real Projects</h3>
+                    <p>Work on production systems used by real clients</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Expert Mentorship</h3>
+                    <p>Learn from industry professionals with years of experience</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Career Growth</h3>
+                    <p>Top performers get full-time job offers</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Stipend Provided</h3>
+                    <p>Competitive compensation during internship</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apply Section -->
+    <section class="apply-section" id="apply">
+        <div class="container">
+            <div class="apply-card">
+                <h2 class="section-title">Ready to Start Your Journey?</h2>
+                <p class="section-subtitle">Upload your resume and join hundreds of students building their future</p>
+
+                <!-- FormSpree Form -->
+                <form id="applicationForm" class="application-form" action="https://formspree.io/f/mojbpwvd" method="POST" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+91 1234567890">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="college">College/University *</label>
+                            <input type="text" id="college" name="college" required placeholder="Your institution name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year">Current Year *</label>
+                            <select id="year" name="year" required>
+                                <option value="">Select your year</option>
+                                <option value="1st Year">1st Year BTech</option>
+                                <option value="2nd Year">2nd Year BTech</option>
+                                <option value="3rd Year">3rd Year BTech</option>
+                                <option value="4th Year">4th Year BTech</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="track">Preferred Track *</label>
+                            <select id="track" name="track" required>
+                                <option value="">Choose internship area</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="Data Analytics">Data Analytics</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Generative AI">Generative AI</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-full">
+                        <label for="resume">Resume Link (Google Drive, Dropbox, etc.) *</label>
+                        <input type="url" id="resume" name="resume_link" required placeholder="https://drive.google.com/file/d/... (Make sure link is publicly accessible)">
+                        <small style="color: #64748b; font-size: 0.85rem; margin-top: 4px; display: block;">
+                            Upload your resume to Google Drive or Dropbox, make it publicly accessible, and paste the link here
+                        </small>
+                    </div>
+
+                    <div class="form-group form-group-full">
+                        <label for="message">Why do you want to join SoftServe?</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Tell us about your interests and goals..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Submit Application</button>
+
+                    <div class="form-status" id="formStatus"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="assets/logo.svg" alt="SoftServe Logo" class="footer-logo">
+                    <p class="footer-text">Empowering the next generation of tech professionals</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: ganura@gmail.com</p>
+                    <p>Website: www.softserve.com</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul class="footer-links">
+                        <li><a href="#internships">Cloud Computing</a></li>
+                        <li><a href="#internships">Data Analytics</a></li>
+                        <li><a href="#internships">Data Science</a></li>
+                        <li><a href="#internships">Web Development</a></li>
+                        <li><a href="#internships">Generative AI</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SoftServe Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
