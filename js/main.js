@@ -20,30 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Create FormData object
             const formData = new FormData(form);
 
-            // DEMO MODE: FormSpree submission disabled to save monthly quota
-            // Simulate successful submission with delay
-            setTimeout(function() {
-                // Success (simulated - not actually submitting to FormSpree)
-                formStatus.className = 'form-status success';
-                formStatus.textContent = '✓ Application submitted successfully! Redirecting to homepage...';
-                form.reset();
-
-                // Scroll to status message
-                formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-                // Reset button state
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-                submitButton.classList.remove('loading');
-
-                // Redirect to top of page after 2 seconds
-                setTimeout(function() {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    formStatus.style.display = 'none';
-                }, 2000);
-            }, 1000); // 1 second delay to simulate network request
-
-            /* PRODUCTION MODE: Uncomment this block when ready to accept real submissions
+            // PRODUCTION MODE: Real form submission to FormSpree
             try {
                 // Submit to FormSpree
                 const response = await fetch(form.action, {
@@ -57,17 +34,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     // Success
                     formStatus.className = 'form-status success';
-                    formStatus.textContent = '✓ Application submitted successfully! Redirecting to homepage...';
+                    formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
                     form.reset();
 
                     // Scroll to status message
                     formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-                    // Redirect to top of page after 2 seconds
+                    // Redirect to top of page after 3 seconds
                     setTimeout(function() {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         formStatus.style.display = 'none';
-                    }, 2000);
+                    }, 3000);
                 } else {
                     // Error
                     const data = await response.json();
@@ -84,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.disabled = false;
                 submitButton.classList.remove('loading');
             }
-            */
         });
     }
 
