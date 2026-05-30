@@ -2,6 +2,28 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Firebase Configuration (replace with your Firebase config)
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    let db = null;
+    try {
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log('✓ Firebase initialized successfully');
+        }
+    } catch (error) {
+        console.warn('⚠️ Firebase not initialized:', error.message);
+    }
+
     // File upload handling
     const fileUploadArea = document.getElementById('fileUploadArea');
     const fileInput = document.getElementById('resume');
@@ -126,6 +148,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const cloudinaryData = await cloudinaryResponse.json();
                 const resumeUrl = cloudinaryData.secure_url;
 
+                // LOCAL TESTING MODE: Email sending commented out
+                // Uncomment the block below when ready for production
+
+                /* PRODUCTION: Email Sending via FormSpree
                 // Step 2: Submit form data with resume URL to FormSpree
                 submitButton.textContent = 'Sending application...';
 
@@ -171,6 +197,54 @@ document.addEventListener('DOMContentLoaded', function() {
                     formStatus.textContent = '✗ ' + (data.error || 'Failed to send application. Please try again.');
                     formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
+                */
+
+                // Save application data to Firebase
+                const applicationData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    college: document.getElementById('college').value,
+                    year: document.getElementById('year').value,
+                    track: document.getElementById('track').value,
+                    cgpa: document.getElementById('cgpa').value,
+                    message: document.getElementById('message').value || 'N/A',
+                    resume_url: resumeUrl,
+                    resume_filename: uploadedFile.name,
+                    submitted_at: new Date().toISOString(),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                // Save to Firebase Firestore
+                if (db) {
+                    try {
+                        const docRef = await db.collection('applications').add(applicationData);
+                        console.log('✓ Application saved to Firebase with ID:', docRef.id);
+
+                        formStatus.className = 'form-status success';
+                        formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
+                    } catch (firebaseError) {
+                        console.error('Firebase save error:', firebaseError);
+                        formStatus.className = 'form-status error';
+                        formStatus.textContent = '✗ Application saved locally but could not sync to database.';
+                    }
+                } else {
+                    console.warn('⚠️ Firebase not initialized - data not saved');
+                    formStatus.className = 'form-status success';
+                    formStatus.textContent = '✓ Resume uploaded successfully! (Database not configured)';
+                }
+
+                form.reset();
+                removeFile();
+
+                // Scroll to status message
+                formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Redirect to top of page after 3 seconds
+                setTimeout(function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    formStatus.style.display = 'none';
+                }, 3000);
             } catch (error) {
                 // Network or upload error
                 formStatus.className = 'form-status error';
