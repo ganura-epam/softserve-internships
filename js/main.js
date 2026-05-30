@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const formStatus = document.getElementById('formStatus');
 
     // Cloudinary configuration (replace these with your values after setup)
-    const CLOUDINARY_CLOUD_NAME = 'YOUR_CLOUD_NAME'; // Replace with your cloud name
-    const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET'; // Replace with your upload preset
+    const CLOUDINARY_CLOUD_NAME = 'dmsqoncw5'; // Replace with your cloud name
+    const CLOUDINARY_UPLOAD_PRESET = 'softserve_internships'; // Replace with your upload preset
 
     if (form) {
         form.addEventListener('submit', async function(e) {
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.textContent = 'Uploading to cloud...';
 
                 const cloudinaryResponse = await fetch(
-                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`,
+                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,
                     {
                         method: 'POST',
                         body: cloudinaryFormData
