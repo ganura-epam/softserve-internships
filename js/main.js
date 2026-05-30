@@ -2,7 +2,85 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Form submission handling
+    // Initialize EmailJS (will be configured with your credentials)
+    // You'll need to replace these with your actual EmailJS credentials from setup
+    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+
+    // File upload handling
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileInput = document.getElementById('resume');
+    const filePreview = document.getElementById('filePreview');
+    const fileName = document.getElementById('fileName');
+    const fileRemoveBtn = document.getElementById('fileRemoveBtn');
+    let uploadedFile = null;
+
+    if (fileUploadArea && fileInput) {
+        // Click to upload
+        fileUploadArea.addEventListener('click', function(e) {
+            if (e.target !== fileRemoveBtn && !e.target.closest('.file-remove-btn')) {
+                fileInput.click();
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', function(e) {
+            handleFile(e.target.files[0]);
+        });
+
+        // Drag and drop
+        fileUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            fileUploadArea.classList.add('drag-over');
+        });
+
+        fileUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            fileUploadArea.classList.remove('drag-over');
+        });
+
+        fileUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            fileUploadArea.classList.remove('drag-over');
+            handleFile(e.dataTransfer.files[0]);
+        });
+
+        // Remove file
+        fileRemoveBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            removeFile();
+        });
+    }
+
+    function handleFile(file) {
+        if (!file) return;
+
+        // Validate file type
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Please upload only PDF or DOC files');
+            return;
+        }
+
+        // Validate file size (2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File size must be less than 2MB');
+            return;
+        }
+
+        uploadedFile = file;
+        fileName.textContent = file.name;
+        fileUploadArea.querySelector('.file-upload-content').style.display = 'none';
+        filePreview.style.display = 'flex';
+    }
+
+    function removeFile() {
+        uploadedFile = null;
+        fileInput.value = '';
+        fileUploadArea.querySelector('.file-upload-content').style.display = 'flex';
+        filePreview.style.display = 'none';
+    }
+
+    // Form submission handling with EmailJS
     const form = document.getElementById('applicationForm');
     const formStatus = document.getElementById('formStatus');
 
@@ -10,51 +88,82 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            // Validate file upload
+            if (!uploadedFile) {
+                formStatus.className = 'form-status error';
+                formStatus.textContent = '✗ Please upload your resume';
+                return;
+            }
+
             // Show loading state
             const submitButton = form.querySelector('button[type="submit"]');
             const originalText = submitButton.textContent;
-            submitButton.textContent = 'Submitting...';
+            submitButton.textContent = 'Uploading & Sending...';
             submitButton.disabled = true;
             submitButton.classList.add('loading');
 
-            // Create FormData object
-            const formData = new FormData(form);
-
-            // PRODUCTION MODE: Real form submission to FormSpree
             try {
-                // Submit to FormSpree
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
+                // Convert file to base64 for EmailJS
+                const reader = new FileReader();
+                reader.readAsDataURL(uploadedFile);
+
+                reader.onload = async function() {
+                    const base64File = reader.result.split(',')[1];
+
+                    // Prepare template parameters
+                    const templateParams = {
+                        to_email: 'ganura@gmail.com',
+                        from_name: document.getElementById('name').value,
+                        from_email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        college: document.getElementById('college').value,
+                        year: document.getElementById('year').value,
+                        track: document.getElementById('track').value,
+                        cgpa: document.getElementById('cgpa').value,
+                        message: document.getElementById('message').value || 'N/A',
+                        resume_name: uploadedFile.name,
+                        resume_file: base64File
+                    };
+
+                    try {
+                        // Send email via EmailJS
+                        const response = await emailjs.send(
+                            'YOUR_SERVICE_ID',  // Replace with your EmailJS service ID
+                            'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+                            templateParams
+                        );
+
+                        // Success
+                        formStatus.className = 'form-status success';
+                        formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
+                        form.reset();
+                        removeFile();
+
+                        // Scroll to status message
+                        formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                        // Redirect to top of page after 3 seconds
+                        setTimeout(function() {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            formStatus.style.display = 'none';
+                        }, 3000);
+
+                    } catch (error) {
+                        console.error('EmailJS error:', error);
+                        formStatus.className = 'form-status error';
+                        formStatus.textContent = '✗ Failed to send application. Please try again.';
                     }
-                });
+                };
 
-                if (response.ok) {
-                    // Success
-                    formStatus.className = 'form-status success';
-                    formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
-                    form.reset();
-
-                    // Scroll to status message
-                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-                    // Redirect to top of page after 3 seconds
-                    setTimeout(function() {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        formStatus.style.display = 'none';
-                    }, 3000);
-                } else {
-                    // Error
-                    const data = await response.json();
+                reader.onerror = function() {
                     formStatus.className = 'form-status error';
-                    formStatus.textContent = '✗ ' + (data.error || 'Something went wrong. Please try again.');
-                }
+                    formStatus.textContent = '✗ Failed to read file. Please try again.';
+                };
+
             } catch (error) {
-                // Network error
                 formStatus.className = 'form-status error';
-                formStatus.textContent = '✗ Network error. Please check your connection and try again.';
+                formStatus.textContent = '✗ Error submitting application. Please try again.';
+                console.error('Submission error:', error);
             } finally {
                 // Reset button state
                 submitButton.textContent = originalText;

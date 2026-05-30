@@ -7,6 +7,8 @@
     <title>SoftServe | Internship Opportunities for BTech Students</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -228,10 +230,31 @@
                     </div>
 
                     <div class="form-group form-group-full">
-                        <label for="resume">Resume Link (Google Drive, Dropbox, etc.) *</label>
-                        <input type="url" id="resume" name="resume_link" required placeholder="https://drive.google.com/file/d/... (Make sure link is publicly accessible)">
+                        <label for="resume">Upload Resume (PDF or DOC, max 2MB) *</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required style="display: none;">
+                            <div class="file-upload-content">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                <p class="file-upload-text">
+                                    <strong>Click to upload</strong> or drag and drop<br>
+                                    <span style="font-size: 0.9rem; color: #64748b;">PDF, DOC, DOCX (max 2MB)</span>
+                                </p>
+                            </div>
+                            <div class="file-upload-preview" id="filePreview" style="display: none;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                    <polyline points="13 2 13 9 20 9"></polyline>
+                                </svg>
+                                <span id="fileName"></span>
+                                <button type="button" class="file-remove-btn" id="fileRemoveBtn">✕</button>
+                            </div>
+                        </div>
                         <small style="color: #64748b; font-size: 0.85rem; margin-top: 4px; display: block;">
-                            Upload your resume to Google Drive or Dropbox, make it publicly accessible, and paste the link here
+                            Upload your resume in PDF or DOC format (maximum 2MB)
                         </small>
                     </div>
 
