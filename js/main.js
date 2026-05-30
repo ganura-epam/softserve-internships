@@ -76,9 +76,13 @@ document.addEventListener('DOMContentLoaded', function() {
         filePreview.style.display = 'none';
     }
 
-    // Form submission handling with FormSpree
+    // Form submission handling with Cloudinary + FormSpree
     const form = document.getElementById('applicationForm');
     const formStatus = document.getElementById('formStatus');
+
+    // Cloudinary configuration (replace these with your values after setup)
+    const CLOUDINARY_CLOUD_NAME = 'YOUR_CLOUD_NAME'; // Replace with your cloud name
+    const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET'; // Replace with your upload preset
 
     if (form) {
         form.addEventListener('submit', async function(e) {
@@ -95,19 +99,49 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show loading state
             const submitButton = form.querySelector('button[type="submit"]');
             const originalText = submitButton.textContent;
-            submitButton.textContent = 'Uploading & Sending...';
+            submitButton.textContent = 'Uploading resume...';
             submitButton.disabled = true;
             submitButton.classList.add('loading');
 
             try {
-                // Create FormData with all form fields
-                const formData = new FormData(form);
+                // Step 1: Upload file to Cloudinary
+                const cloudinaryFormData = new FormData();
+                cloudinaryFormData.append('file', uploadedFile);
+                cloudinaryFormData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-                // Add the actual file to FormData (FormSpree handles file attachments automatically)
-                formData.set('resume', uploadedFile);
+                submitButton.textContent = 'Uploading to cloud...';
 
-                // Submit to FormSpree
-                const response = await fetch(form.action, {
+                const cloudinaryResponse = await fetch(
+                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`,
+                    {
+                        method: 'POST',
+                        body: cloudinaryFormData
+                    }
+                );
+
+                if (!cloudinaryResponse.ok) {
+                    throw new Error('Failed to upload resume to cloud storage');
+                }
+
+                const cloudinaryData = await cloudinaryResponse.json();
+                const resumeUrl = cloudinaryData.secure_url;
+
+                // Step 2: Submit form data with resume URL to FormSpree
+                submitButton.textContent = 'Sending application...';
+
+                const formData = new FormData();
+                formData.append('name', document.getElementById('name').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('phone', document.getElementById('phone').value);
+                formData.append('college', document.getElementById('college').value);
+                formData.append('year', document.getElementById('year').value);
+                formData.append('track', document.getElementById('track').value);
+                formData.append('cgpa', document.getElementById('cgpa').value);
+                formData.append('message', document.getElementById('message').value || 'N/A');
+                formData.append('resume_url', resumeUrl);
+                formData.append('resume_filename', uploadedFile.name);
+
+                const formspreeResponse = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -115,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                if (response.ok) {
+                if (formspreeResponse.ok) {
                     // Success
                     formStatus.className = 'form-status success';
                     formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
@@ -131,16 +165,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         formStatus.style.display = 'none';
                     }, 3000);
                 } else {
-                    // Error
-                    const data = await response.json();
+                    // Error from FormSpree
+                    const data = await formspreeResponse.json();
                     formStatus.className = 'form-status error';
-                    formStatus.textContent = '✗ ' + (data.error || 'Something went wrong. Please try again.');
+                    formStatus.textContent = '✗ ' + (data.error || 'Failed to send application. Please try again.');
                     formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             } catch (error) {
-                // Network error
+                // Network or upload error
                 formStatus.className = 'form-status error';
-                formStatus.textContent = '✗ Network error. Please check your connection and try again.';
+                if (error.message.includes('cloud storage')) {
+                    formStatus.textContent = '✗ Failed to upload resume. Please check your file and try again.';
+                } else {
+                    formStatus.textContent = '✗ Error submitting application. Please try again.';
+                }
                 formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 console.error('Submission error:', error);
             } finally {
