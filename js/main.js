@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Firebase Configuration (replace with your Firebase config)
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
+        apiKey: "AIzaSyA22g4QcbtI63wJi1azL6FEi0sqrcfFEjc",
+        authDomain: "softserve-internships.firebaseapp.com",
+        projectId: "softserve-internships",
+        storageBucket: "softserve-internships.firebasestorage.app",
+        messagingSenderId: "680833709880",
+        appId: "1:680833709880:web:d9fa0142424354a085f3cd"
+      };
 
     // Initialize Firebase
     let db = null;
