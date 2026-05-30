@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Together - Curated video resources for Cloud Computing, Data Analytics, Data Science, Web Development, and Generative AI">
+    <title>Learn Together | SoftServe Internship Program</title>
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="assets/logo.svg" alt="SoftServe Logo" class="logo">
+                </div>
+                <nav class="nav">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="learntogether.html" class="active">Learn Together</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">Learn Together</h1>
+            <p class="hero-subtitle">Master your skills with curated video tutorials selected by industry experts</p>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-top: 1rem;">
+                📚 88 Videos | ⏱️ 400+ Hours | 🎯 All Skill Levels | 🆓 Free Access
+            </p>
+        </div>
+    </section>
+
+    <!-- Track Selector Section -->
+    <section class="internships" style="padding-top: 40px;">
+        <div class="container">
+            <div class="track-selector-container">
+                <label for="trackSelector" class="track-selector-label">Choose Your Learning Path:</label>
+                <select id="trackSelector" class="track-selector">
+                    <option value="cloud-computing" selected>☁️ Cloud Computing</option>
+                    <option value="data-analytics">📊 Data Analytics</option>
+                    <option value="data-science">🧠 Data Science</option>
+                    <option value="web-development">💻 Web Development</option>
+                    <option value="generative-ai">🤖 Generative AI</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Content Area -->
+    <section class="learning-content" id="learningContent">
+        <div class="container">
+            <!-- Track Introduction Card -->
+            <div id="trackIntro" class="track-intro-card"></div>
+
+            <!-- Progress Tracker -->
+            <div id="progressTracker" class="progress-tracker"></div>
+
+            <!-- Video Sections Container -->
+            <div id="videoSections" class="video-sections"></div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="apply-section">
+        <div class="container">
+            <div class="apply-card">
+                <h2 class="section-title">Ready to Apply?</h2>
+                <p class="section-subtitle">Start your internship journey with SoftServe and work on real-world projects</p>
+                <a href="index.html#apply" class="btn btn-primary btn-large">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="assets/logo.svg" alt="SoftServe Logo" class="footer-logo">
+                    <p class="footer-text">Empowering the next generation of tech professionals</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: ganura@gmail.com</p>
+                    <p>Website: <a href="https://ganura-epam.github.io/softserve-internships/" target="_blank" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">ganura-epam.github.io/softserve-internships</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="learntogether.html">Learn Together</a></li>
+                        <li><a href="index.html#apply">Apply Now</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SoftServe Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/learntogether.js"></script>
+</body>
+</html>
