@@ -301,18 +301,8 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
-    // Phone number formatting
-    const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            // Basic formatting - can be customized based on region
-            if (value.length > 10) {
-                value = value.substring(0, 10);
-            }
-            e.target.value = value ? '+91 ' + value : '';
-        });
-    }
+    // Phone number formatting - removed auto +91 prefix for better UX
+    // Users can type their number naturally
 
     // Form validation feedback
     const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
