@@ -2,10 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Initialize EmailJS (will be configured with your credentials)
-    // You'll need to replace these with your actual EmailJS credentials from setup
-    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
-
     // File upload handling
     const fileUploadArea = document.getElementById('fileUploadArea');
     const fileInput = document.getElementById('resume');
@@ -80,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         filePreview.style.display = 'none';
     }
 
-    // Form submission handling with EmailJS
+    // Form submission handling with FormSpree
     const form = document.getElementById('applicationForm');
     const formStatus = document.getElementById('formStatus');
 
@@ -92,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!uploadedFile) {
                 formStatus.className = 'form-status error';
                 formStatus.textContent = '✗ Please upload your resume';
+                formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 return;
             }
 
@@ -103,66 +100,48 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.classList.add('loading');
 
             try {
-                // Convert file to base64 for EmailJS
-                const reader = new FileReader();
-                reader.readAsDataURL(uploadedFile);
+                // Create FormData with all form fields
+                const formData = new FormData(form);
 
-                reader.onload = async function() {
-                    const base64File = reader.result.split(',')[1];
+                // Add the actual file to FormData (FormSpree handles file attachments automatically)
+                formData.set('resume', uploadedFile);
 
-                    // Prepare template parameters
-                    const templateParams = {
-                        to_email: 'ganura@gmail.com',
-                        from_name: document.getElementById('name').value,
-                        from_email: document.getElementById('email').value,
-                        phone: document.getElementById('phone').value,
-                        college: document.getElementById('college').value,
-                        year: document.getElementById('year').value,
-                        track: document.getElementById('track').value,
-                        cgpa: document.getElementById('cgpa').value,
-                        message: document.getElementById('message').value || 'N/A',
-                        resume_name: uploadedFile.name,
-                        resume_file: base64File
-                    };
-
-                    try {
-                        // Send email via EmailJS
-                        const response = await emailjs.send(
-                            'YOUR_SERVICE_ID',  // Replace with your EmailJS service ID
-                            'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-                            templateParams
-                        );
-
-                        // Success
-                        formStatus.className = 'form-status success';
-                        formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
-                        form.reset();
-                        removeFile();
-
-                        // Scroll to status message
-                        formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-                        // Redirect to top of page after 3 seconds
-                        setTimeout(function() {
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                            formStatus.style.display = 'none';
-                        }, 3000);
-
-                    } catch (error) {
-                        console.error('EmailJS error:', error);
-                        formStatus.className = 'form-status error';
-                        formStatus.textContent = '✗ Failed to send application. Please try again.';
+                // Submit to FormSpree
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
                     }
-                };
+                });
 
-                reader.onerror = function() {
+                if (response.ok) {
+                    // Success
+                    formStatus.className = 'form-status success';
+                    formStatus.textContent = '✓ Application submitted successfully! We will contact you soon.';
+                    form.reset();
+                    removeFile();
+
+                    // Scroll to status message
+                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                    // Redirect to top of page after 3 seconds
+                    setTimeout(function() {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        formStatus.style.display = 'none';
+                    }, 3000);
+                } else {
+                    // Error
+                    const data = await response.json();
                     formStatus.className = 'form-status error';
-                    formStatus.textContent = '✗ Failed to read file. Please try again.';
-                };
-
+                    formStatus.textContent = '✗ ' + (data.error || 'Something went wrong. Please try again.');
+                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             } catch (error) {
+                // Network error
                 formStatus.className = 'form-status error';
-                formStatus.textContent = '✗ Error submitting application. Please try again.';
+                formStatus.textContent = '✗ Network error. Please check your connection and try again.';
+                formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 console.error('Submission error:', error);
             } finally {
                 // Reset button state
