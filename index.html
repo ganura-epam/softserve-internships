@@ -231,6 +231,256 @@
                         </div>
                     </div>
 
+                    <!-- Self-Assessment Questions (Dynamic based on track) -->
+                    <div id="selfAssessmentSection" style="display: none;">
+                        <div class="form-group form-group-full">
+                            <h3 style="color: var(--primary-color); margin: 0 0 1rem 0; font-size: 1.1rem;">📝 Quick Self-Assessment</h3>
+                            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem;">Help us understand your current skill level (4 quick questions)</p>
+                        </div>
+
+                        <!-- Cloud Computing Questions -->
+                        <div id="questions-cloud-computing" class="track-questions" style="display: none;">
+                            <div class="form-group form-group-full">
+                                <label for="q1_cloud">1. How would you rate your overall cloud computing knowledge? *</label>
+                                <select id="q1_cloud" name="q1_cloud" class="assessment-question">
+                                    <option value="">Select rating</option>
+                                    <option value="1">1 - Beginner (Just heard about it)</option>
+                                    <option value="2">2 - Basic (Know concepts)</option>
+                                    <option value="3">3 - Intermediate (Completed courses)</option>
+                                    <option value="4">4 - Advanced (Built projects)</option>
+                                    <option value="5">5 - Expert (Production experience)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q2_cloud">2. Which cloud platforms have you worked with? *</label>
+                                <div class="checkbox-group" id="q2_cloud">
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_cloud" value="AWS"> AWS (Amazon Web Services)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_cloud" value="Azure"> Azure (Microsoft Azure)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_cloud" value="GCP"> GCP (Google Cloud Platform)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_cloud" value="None"> None yet (eager to learn)</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q3_cloud">3. Have you used Docker? *</label>
+                                <select id="q3_cloud" name="q3_cloud" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Expert">Yes, I've built and deployed Docker containers</option>
+                                    <option value="Intermediate">Yes, basic Docker commands</option>
+                                    <option value="Tutorial">Completed Docker tutorials/courses</option>
+                                    <option value="Concept">No, but I understand the concept</option>
+                                    <option value="Never">Never heard of it</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q4_cloud">4. CI/CD Pipeline Experience? *</label>
+                                <select id="q4_cloud" name="q4_cloud" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Built">Built CI/CD pipelines (Jenkins/GitHub Actions)</option>
+                                    <option value="Used">Used existing pipelines for projects</option>
+                                    <option value="Tutorial">Completed tutorials on CI/CD</option>
+                                    <option value="Concept">Know the concept but no hands-on</option>
+                                    <option value="Never">Never heard of CI/CD</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Data Analytics Questions -->
+                        <div id="questions-data-analytics" class="track-questions" style="display: none;">
+                            <div class="form-group form-group-full">
+                                <label for="q1_analytics">1. How would you rate your overall data analytics knowledge? *</label>
+                                <select id="q1_analytics" name="q1_analytics" class="assessment-question">
+                                    <option value="">Select rating</option>
+                                    <option value="1">1 - Beginner</option>
+                                    <option value="2">2 - Basic</option>
+                                    <option value="3">3 - Intermediate</option>
+                                    <option value="4">4 - Advanced</option>
+                                    <option value="5">5 - Expert</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q2_analytics">2. SQL Experience? *</label>
+                                <select id="q2_analytics" name="q2_analytics" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Expert">Expert - Complex queries with joins, subqueries, CTEs</option>
+                                    <option value="Intermediate">Intermediate - Comfortable with SELECT, JOIN, GROUP BY</option>
+                                    <option value="Basic">Basic - Know simple SELECT statements</option>
+                                    <option value="Beginner">Beginner - Completed online SQL tutorial</option>
+                                    <option value="None">No experience</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q3_analytics">3. Experience with BI Tools? *</label>
+                                <div class="checkbox-group" id="q3_analytics">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_analytics" value="Power BI"> Power BI</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_analytics" value="Tableau"> Tableau</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_analytics" value="Excel"> Excel (Pivot tables, charts)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_analytics" value="None"> None yet</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q4_analytics">4. Statistical Knowledge? *</label>
+                                <select id="q4_analytics" name="q4_analytics" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Strong">Strong - Hypothesis testing, regression, distributions</option>
+                                    <option value="Moderate">Moderate - Mean, median, standard deviation, correlation</option>
+                                    <option value="Basic">Basic - Averages, percentages</option>
+                                    <option value="Learning">Learning</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Data Science Questions -->
+                        <div id="questions-data-science" class="track-questions" style="display: none;">
+                            <div class="form-group form-group-full">
+                                <label for="q1_datascience">1. How would you rate your overall data science knowledge? *</label>
+                                <select id="q1_datascience" name="q1_datascience" class="assessment-question">
+                                    <option value="">Select rating</option>
+                                    <option value="1">1 - Beginner</option>
+                                    <option value="2">2 - Basic</option>
+                                    <option value="3">3 - Intermediate</option>
+                                    <option value="4">4 - Advanced</option>
+                                    <option value="5">5 - Expert</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q2_datascience">2. Python Programming Experience? *</label>
+                                <select id="q2_datascience" name="q2_datascience" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Advanced">Advanced - Built complex projects, understand OOP</option>
+                                    <option value="Intermediate">Intermediate - Comfortable with functions, loops</option>
+                                    <option value="Basic">Basic - Know syntax and simple programs</option>
+                                    <option value="Beginner">Beginner - Just started learning</option>
+                                    <option value="None">No experience</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q3_datascience">3. Python Libraries You've Used? *</label>
+                                <div class="checkbox-group" id="q3_datascience">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_datascience" value="NumPy"> NumPy</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_datascience" value="Pandas"> Pandas</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_datascience" value="Matplotlib"> Matplotlib / Seaborn</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_datascience" value="Scikit-learn"> Scikit-learn</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_datascience" value="None"> None yet</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q4_datascience">4. Machine Learning Knowledge? *</label>
+                                <select id="q4_datascience" name="q4_datascience" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Deployed">Built and deployed ML models</option>
+                                    <option value="Trained">Trained models using scikit-learn/TensorFlow</option>
+                                    <option value="Courses">Completed ML courses</option>
+                                    <option value="Concepts">Know concepts only</option>
+                                    <option value="None">No experience</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Web Development Questions -->
+                        <div id="questions-web-development" class="track-questions" style="display: none;">
+                            <div class="form-group form-group-full">
+                                <label for="q1_webdev">1. How would you rate your web development knowledge? *</label>
+                                <select id="q1_webdev" name="q1_webdev" class="assessment-question">
+                                    <option value="">Select rating</option>
+                                    <option value="1">1 - Beginner</option>
+                                    <option value="2">2 - Basic</option>
+                                    <option value="3">3 - Intermediate</option>
+                                    <option value="4">4 - Advanced</option>
+                                    <option value="5">5 - Expert</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q2_webdev">2. JavaScript Proficiency? *</label>
+                                <select id="q2_webdev" name="q2_webdev" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Advanced">Advanced - ES6+, async/await, closures, promises</option>
+                                    <option value="Intermediate">Intermediate - Functions, DOM manipulation, events</option>
+                                    <option value="Basic">Basic - Simple scripts and syntax</option>
+                                    <option value="Beginner">Beginner - Just started</option>
+                                    <option value="None">No experience</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q3_webdev">3. Frontend Frameworks You've Used? *</label>
+                                <div class="checkbox-group" id="q3_webdev">
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_webdev" value="React"> React</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_webdev" value="Angular"> Angular</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_webdev" value="Vue"> Vue.js</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_webdev" value="Vanilla"> Vanilla JavaScript only</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q3_webdev" value="None"> None yet</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q4_webdev">4. Backend Development Experience? *</label>
+                                <div class="checkbox-group" id="q4_webdev">
+                                    <label class="checkbox-label"><input type="checkbox" name="q4_webdev" value="Node.js"> Node.js</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q4_webdev" value="Express"> Express.js</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q4_webdev" value="Python"> Python (Flask/Django)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q4_webdev" value="None"> None yet</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Generative AI Questions -->
+                        <div id="questions-generative-ai" class="track-questions" style="display: none;">
+                            <div class="form-group form-group-full">
+                                <label for="q1_genai">1. How would you rate your Generative AI knowledge? *</label>
+                                <select id="q1_genai" name="q1_genai" class="assessment-question">
+                                    <option value="">Select rating</option>
+                                    <option value="1">1 - Beginner (Just heard about it)</option>
+                                    <option value="2">2 - Basic (Used ChatGPT/Claude)</option>
+                                    <option value="3">3 - Intermediate (Completed courses)</option>
+                                    <option value="4">4 - Advanced (Built AI applications)</option>
+                                    <option value="5">5 - Expert (Production AI systems)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q2_genai">2. Which AI models/APIs have you used? *</label>
+                                <div class="checkbox-group" id="q2_genai">
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_genai" value="OpenAI"> OpenAI (GPT-3.5/GPT-4/ChatGPT API)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_genai" value="Claude"> Claude (Anthropic)</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_genai" value="Gemini"> Google Gemini/PaLM</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="q2_genai" value="None"> None yet</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q3_genai">3. Prompt Engineering Experience? *</label>
+                                <select id="q3_genai" name="q3_genai" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Advanced">Advanced - Chain-of-thought, few-shot learning</option>
+                                    <option value="Intermediate">Intermediate - Craft effective prompts consistently</option>
+                                    <option value="Basic">Basic - Trial and error with prompts</option>
+                                    <option value="Beginner">Beginner - Using AI chatbots casually</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="q4_genai">4. RAG (Retrieval Augmented Generation) Knowledge? *</label>
+                                <select id="q4_genai" name="q4_genai" class="assessment-question">
+                                    <option value="">Select experience level</option>
+                                    <option value="Built">Built RAG systems with vector databases</option>
+                                    <option value="Understand">Understand the concept and architecture</option>
+                                    <option value="Courses">Completed courses/tutorials on RAG</option>
+                                    <option value="Never">Never heard of it</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group form-group-full">
                         <label for="resume">Upload Resume (PDF or DOC, max 2MB) *</label>
                         <div class="file-upload-area" id="fileUploadArea">

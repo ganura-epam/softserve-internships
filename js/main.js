@@ -98,6 +98,80 @@ document.addEventListener('DOMContentLoaded', function() {
         filePreview.style.display = 'none';
     }
 
+    // Self-Assessment Questions - Dynamic based on track
+    const trackSelect = document.getElementById('track');
+    const selfAssessmentSection = document.getElementById('selfAssessmentSection');
+
+    if (trackSelect) {
+        trackSelect.addEventListener('change', function() {
+            const selectedTrack = this.value;
+
+            // Hide all question sections
+            document.querySelectorAll('.track-questions').forEach(section => {
+                section.style.display = 'none';
+                // Remove required from hidden questions
+                section.querySelectorAll('.assessment-question, input[type="checkbox"]').forEach(input => {
+                    input.removeAttribute('required');
+                });
+            });
+
+            // Show assessment section if track is selected
+            if (selectedTrack) {
+                selfAssessmentSection.style.display = 'block';
+
+                // Show relevant questions based on track
+                const trackKey = selectedTrack.toLowerCase().replace(/\s+/g, '-');
+                const questionSection = document.getElementById(`questions-${trackKey}`);
+
+                if (questionSection) {
+                    questionSection.style.display = 'block';
+                    // Add required to visible select questions
+                    questionSection.querySelectorAll('.assessment-question').forEach(input => {
+                        input.setAttribute('required', 'required');
+                    });
+                }
+            } else {
+                selfAssessmentSection.style.display = 'none';
+            }
+        });
+    }
+
+    // Helper function to get self-assessment answers
+    function getSelfAssessmentAnswers(track) {
+        const trackKey = track.toLowerCase().replace(/\s+/g, '-');
+        const answers = {};
+
+        // Get select/dropdown answers
+        const selects = document.querySelectorAll(`#questions-${trackKey} .assessment-question`);
+        selects.forEach(select => {
+            if (select.value) {
+                const questionNum = select.id.split('_')[0]; // e.g., 'q1', 'q2'
+                answers[questionNum] = {
+                    question: select.previousElementSibling.textContent.trim(),
+                    answer: select.value
+                };
+            }
+        });
+
+        // Get checkbox answers
+        const checkboxGroups = document.querySelectorAll(`#questions-${trackKey} .checkbox-group`);
+        checkboxGroups.forEach(group => {
+            const groupId = group.id;
+            const questionNum = groupId.split('_')[0];
+            const checkboxes = group.querySelectorAll('input[type="checkbox"]:checked');
+            const values = Array.from(checkboxes).map(cb => cb.value);
+
+            if (values.length > 0) {
+                answers[questionNum] = {
+                    question: group.previousElementSibling.textContent.trim(),
+                    answer: values.join(', ')
+                };
+            }
+        });
+
+        return answers;
+    }
+
     // Form submission handling with Cloudinary + FormSpree
     const form = document.getElementById('applicationForm');
     const formStatus = document.getElementById('formStatus');
@@ -199,6 +273,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 */
 
+                // Get self-assessment answers
+                const selectedTrack = document.getElementById('track').value;
+                const selfAssessment = getSelfAssessmentAnswers(selectedTrack);
+
                 // Save application data to Firebase
                 const applicationData = {
                     name: document.getElementById('name').value,
@@ -206,11 +284,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     phone: document.getElementById('phone').value,
                     college: document.getElementById('college').value,
                     year: document.getElementById('year').value,
-                    track: document.getElementById('track').value,
+                    track: selectedTrack,
                     cgpa: document.getElementById('cgpa').value,
                     message: document.getElementById('message').value || 'N/A',
                     resume_url: resumeUrl,
                     resume_filename: uploadedFile.name,
+                    self_assessment: selfAssessment,
                     submitted_at: new Date().toISOString(),
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 };
