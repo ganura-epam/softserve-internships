@@ -145,9 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const selects = document.querySelectorAll(`#questions-${trackKey} .assessment-question`);
         selects.forEach(select => {
             if (select.value) {
-                const questionNum = select.id.split('_')[0]; // e.g., 'q1', 'q2'
+                const questionNum = select.id.split('_')[0];
+                const label = select.previousElementSibling;
                 answers[questionNum] = {
-                    question: select.previousElementSibling.textContent.trim(),
+                    question: label && label.textContent ? label.textContent.trim() : 'Question',
                     answer: select.value
                 };
             }
@@ -162,8 +163,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const values = Array.from(checkboxes).map(cb => cb.value);
 
             if (values.length > 0) {
+                const label = group.previousElementSibling;
                 answers[questionNum] = {
-                    question: group.previousElementSibling.textContent.trim(),
+                    question: label && label.textContent ? label.textContent.trim() : 'Question',
                     answer: values.join(', ')
                 };
             }
@@ -290,9 +292,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     resume_url: resumeUrl,
                     resume_filename: uploadedFile.name,
                     self_assessment: selfAssessment,
-                    submitted_at: new Date().toISOString(),
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    submitted_at: new Date().toISOString()
                 };
+
+                // Add Firebase timestamp only if Firebase is available
+                if (db && typeof firebase !== 'undefined') {
+                    applicationData.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+                }
 
                 // Save to Firebase Firestore
                 if (db) {
@@ -384,22 +390,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Users can type their number naturally
 
     // Form validation feedback
-    const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
-    inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            if (!this.value) {
-                this.style.borderColor = '#ef4444';
-            } else {
-                this.style.borderColor = '#10b981';
-            }
-        });
+    if (form) {
+        const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.style.borderColor = '#ef4444';
+                } else {
+                    this.style.borderColor = '#10b981';
+                }
+            });
 
-        input.addEventListener('input', function() {
-            if (this.value) {
-                this.style.borderColor = '#10b981';
-            }
+            input.addEventListener('input', function() {
+                if (this.value) {
+                    this.style.borderColor = '#10b981';
+                }
+            });
         });
-    });
+    }
 
     // Email validation
     const emailInput = document.getElementById('email');
